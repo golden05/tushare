@@ -11,7 +11,7 @@ import six
 import pandas as pd
 import requests
 import time
-from threading import Thread
+from threading import Thread   #python 标准类库 运行在分离线程
 from tushare.trader import vars as vs
 from tushare.trader import utils
 from tushare.util import upass as up
@@ -30,8 +30,10 @@ class TraderAPI(object):
         self.trade_prefix = vs.CSC_PREFIX % (vs.P_TYPE['https'], 
                                              vs.DOMAINS['csc'],
                                              vs.PAGES['csclogin'])
+
+        #以上代码组合成 'https://newetrade.csc108.com/login/csclogin' 会出现资金账户登录界面
         self.heart_active = True
-        self.s = requests.session()
+        self.s = requests.session()  #创建会话对象
         if six.PY2:
             self.heart_thread = Thread(target = self.send_heartbeat)
             self.heart_thread.setDaemon(True)
@@ -95,7 +97,7 @@ class TraderAPI(object):
 
 
     def heartbeat(self):
-        return self.baseinfo
+        return self.baseinfo  #获取个人基本信息
 
 
     def exit(self):
@@ -306,8 +308,9 @@ class TraderAPI(object):
         return self._get_baseinfo()
     
     def _get_baseinfo(self):
-        self.s.headers.update(vs.AGENT)
-        txtdata = self.s.get(vs.BASE_URL % (vs.P_TYPE['https'], vs.DOMAINS['csc'], vs.PAGES['baseInfo']))
+        self.s.headers.update(vs.AGENT) #把session会话请求头从python-request更换为Mozilla
+        txtdata = self.s.get(vs.BASE_URL % (vs.P_TYPE['https'], vs.DOMAINS['csc'], vs.PAGES['baseInfo']))  #设置网络地址'https://newetrade.csc108.com/mainHomePage/main_zcgy_List.json'
+        #txtdata 是一个字符串
         jsonobj = utils.get_jdata(txtdata)
         stkdata = jsonobj['data']['moneytype0']
         stkdata['fundid'] = jsonobj['fundid']

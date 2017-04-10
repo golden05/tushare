@@ -1,20 +1,20 @@
-from copy import deepcopy
-import re
+from copy import deepcopy  #深度复制
+import re  #标准库正则表达式对象
 from lxml.etree import Element
-from lxml import etree
-from zipfile import ZipFile, ZIP_DEFLATED
+from lxml import etree  #解析html
+from zipfile import ZipFile, ZIP_DEFLATED #ZipFile用于打开关闭读取写显示压缩文件,后一个是常量8
 
 NAMESPACES = {
     'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main',
     'mc': 'http://schemas.openxmlformats.org/markup-compatibility/2006',
     'ct': 'http://schemas.openxmlformats.org/package/2006/content-types',
-}
+}   #字典
 
 CONTENT_TYPES_PARTS = (
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml',
-)
+) #tuple是不可变的数组
 
 CONTENT_TYPE_SETTINGS = 'application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml'
 
@@ -25,10 +25,10 @@ class MailMerge(object):
         self.parts = {}
         self.settings = None
         self._settings_info = None
-        self.remove_empty_tables = remove_empty_tables
+        self.remove_empty_tables = remove_empty_tables  #boolean逻辑变量
 
         content_types = etree.parse(self.zip.open('[Content_Types].xml'))
-        for file in content_types.findall('{%(ct)s}Override' % NAMESPACES):
+        for file in content_types.findall('{%(ct)s}Override' % NAMESPACES): #把%(ct)s 替换成字典的对应内容
             type = file.attrib['ContentType' % NAMESPACES]
             if type in CONTENT_TYPES_PARTS:
                 zi, self.parts[zi] = self.__get_tree_of_file(file)
@@ -87,7 +87,7 @@ class MailMerge(object):
             if mail_merge is not None:
                 settings_root.remove(mail_merge)
 
-    def __get_tree_of_file(self, file):
+    def __get_tree_of_file(self, file):  #__私有方法
         fn = file.attrib['PartName' % NAMESPACES].split('/', 1)[1]
         zi = self.zip.getinfo(fn)
         return zi, etree.parse(self.zip.open(zi))

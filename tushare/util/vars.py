@@ -3,7 +3,7 @@ import sys
 PY3 = (sys.version_info[0] >= 3)
 HTTP_OK = 200
 HTTP_AUTHORIZATION_ERROR = 401
-HTTP_URL = 'api.wmcloud.com'
+HTTP_URL = 'api.wmcloud.com'   #通联网站
 HTTP_PORT = 443
 BOND = '/api/bond/getBond.csv?secID=%s&ticker=%s&field=%s'
 BONDCF = '/api/bond/getBondCf.csv?secID=%s&ticker=%s&beginDate=%s&cashTypeCD=%s&endDate=%s&field=%s'

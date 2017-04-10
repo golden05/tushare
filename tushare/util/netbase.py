@@ -11,9 +11,9 @@ class Client(object):
         self._ref = ref
         self._cookie = cookie
         self._url = url
-        self._setOpener()
+        self._setOpener() 设置请求
         
-    def _setOpener(self):
+    def _setOpener(self):  #不能被from import 导入，设置请求
         request = Request(self._url)
         request.add_header("Accept-Language", "en-US,en;q=0.5")
         request.add_header("Connection", "keep-alive")

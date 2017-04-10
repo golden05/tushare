@@ -13,14 +13,14 @@ from tushare.stock import cons as ct
 
 BK = 'bk'
 
-def set_token(token):
-    df = pd.DataFrame([token], columns=['token'])
-    df.to_csv(ct.TOKEN_F_P, index=False)
+def set_token(token):    #设置
+    df = pd.DataFrame([token], s=['token'])
+    df.to_csv(ct.TOKEN_F_P, index=False  #tk.csv
     
     
 def get_token():
-    if os.path.exists(ct.TOKEN_F_P):
-        df = pd.read_csv(ct.TOKEN_F_P)
+    if os.path.exists(ct.TOKEN_F_P):   #tk.csv 文件,文件名用常量定义，可以集中替换
+        df = pd.read_csv(ct.TOKEN_F_P)   #pd 
         return str(df.ix[0]['token'])
     else:
         print(ct.TOKEN_ERR_MSG)

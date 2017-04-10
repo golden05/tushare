@@ -1,10 +1,10 @@
-from setuptools import setup, find_packages
-import codecs
-import os
+import codecs  #字符编码
+from setuptools import setup, find_packages #动态发现和安装
+import os  #操作系统
 import tushare
 
 def read(fname):
-    return codecs.open(os.path.join(os.path.dirname(__file__), fname)).read()
+    return codecs.opvimen(os.path.join(os.path.dirname(__file__), fname)).read() #打开一个编码文件
 
 long_desc = """
 TuShare
@@ -67,7 +67,7 @@ setup(
     name='tushare',
     version=tushare.__version__,
     description='A utility for crawling historical and Real-time Quotes data of China stocks',
-#     long_description=read("READM.rst"),
+    #     long_description=read("READM.rst"),
     long_description = long_desc,
     author='Jimmy Liu',
     author_email='jimmysoa@sina.cn',

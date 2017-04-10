@@ -11,7 +11,7 @@ from pandas import compat
 import os
 
 
-class Store(object):
+class Store(object):  #存储对象
 
     def __init__(self, data=None, name=None, path=None):
         if isinstance(data, pd.DataFrame):
@@ -26,13 +26,13 @@ class Store(object):
             name = self.name
         if path is None:
             path = self.path
-        file_path = '%s%s%s.%s'
+        file_path = '%s%s%s.%s'   #占位符表示字符串
         if isinstance(name, compat.string_types) and name is not '':
             if (path is None) or (path == ''):
-                file_path = '.'.join([name, to])
+                file_path = '.'.join([name, to])   #用.连接两个字符串
             else:
                 try:
-                    if os.path.exists(path) is False:
+                    if os.path.exists(path) is False:  #os.path 路径函数
                         os.mkdir(path) 
                     file_path = file_path%(path, '/', name, to)
                 except:
